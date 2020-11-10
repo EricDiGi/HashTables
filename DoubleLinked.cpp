@@ -87,6 +87,10 @@ void DoubleLinked::push(int ndat){
 }
 
 void DoubleLinked::append(int ndat){
+    if(this->list == NULL){
+        push(ndat);
+        return;
+    }
     Node* newNode = new Node(ndat);
     Node* iter = this->list;
     Node* head = this->list;
@@ -98,6 +102,7 @@ void DoubleLinked::append(int ndat){
     }
     newNode->prev = iter;
     iter->next = newNode;
+    //cout << "append\n";
 }
 
 void DoubleLinked::insert(int loc, int ndat){
@@ -138,7 +143,10 @@ void DoubleLinked::remove(int loc){
     }
     //Only modify length if not circular, otherwise it doesnt matter
     if(loc > length() && !isCircular()){loc = loc%length();}
-
+    if((loc == 0)&&(length() <= 1)){
+        this->list = NULL;
+        return;
+    }
     if(loc == 0){
         Node* prev = this->list->prev;
         if(prev != NULL){
@@ -152,7 +160,7 @@ void DoubleLinked::remove(int loc){
 
     prev = this->list;
     curr = this->list->next;
-    for(int i = 0;i < loc - 1; i++){
+    for(int i = 0;i < loc; i++){
         prev = prev->next;
         curr = curr->next;
     }
@@ -162,6 +170,22 @@ void DoubleLinked::remove(int loc){
         prev->prev->next = curr;
     }
     
+}
+
+int DoubleLinked::find(int data){
+    int iter = 0;
+    Node* temp = this->list;
+    while(temp!=NULL){
+        //circular case
+        if(temp->next==this->list)
+            break;
+        if(temp->data == data){
+            return iter;
+        }
+        temp = temp->next;
+        iter++;
+    }
+    return -1;
 }
 
 Node* DoubleLinked::search(int data){

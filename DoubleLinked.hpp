@@ -21,6 +21,7 @@ class DoubleLinked{
         void replace(int loc, int ndat);
         void insert(int loc, int ndat);
         void remove(int loc);
+        int find(int data);
         Node* search(int data);
 
         //List transformations

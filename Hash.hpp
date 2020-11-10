@@ -1,14 +1,29 @@
 #ifndef Hash_HPP
 #define Hash_HPP
 
-using namespace std;
+//using namespace std;
 
-#include "DoubleLniked.hpp"
+#include <iostream>
+#include "DoubleLinked.hpp"
 
 class Hash{
     private:
-        int Bucket;
-        DoubleLinked list;
+        int bucket;
+        DoubleLinked *table;
+    public:
+        Hash(int val);
+        ~Hash();
+        void insert(int key);
+        void del(int key);
+        int hashF(int val);
+
+        friend std::ostream &operator<<(std::ostream &out, const Hash &h){
+            for(int i = 0; i < h.bucket; i++){
+                out << i << ": " << h.table[i];
+            }
+            //out << "placeholder" << std::endl;
+            return out;
+        }
 };
 
 
